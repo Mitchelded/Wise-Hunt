@@ -32,6 +32,6 @@ public class PlayerController : MonoBehaviour
     void UpdateUI()
     {
         hintsCollected = Mathf.Min(hintsCollected, maxHints); // Ограничиваем фактическое количество максимальным числом подсказок
-        hintText.text = "Podskazok: " + hintsCollected + "/" + maxHints;
+        hintText.text = "Clue: " + hintsCollected + "/" + maxHints;
     }
 }

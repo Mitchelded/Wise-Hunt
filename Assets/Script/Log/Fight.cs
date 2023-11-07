@@ -8,8 +8,9 @@ public class Fight : MonoBehaviour
 	public GameObject mainCamera;
 	public GameObject fightCamera;
 	public GameObject player;
-	public float notCaptureTime = 100.5f;
+	public float notCaptureTime = 1.5f;
 	private bool isCapture = false;
+	
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -32,6 +33,7 @@ public class Fight : MonoBehaviour
 			else
 			{
 				StartCoroutine(CaptureHero(other.gameObject));
+				isCapture = false;
 			}
 			
 		}
@@ -45,7 +47,7 @@ public class Fight : MonoBehaviour
 		fightCamera.gameObject.SetActive(true);
 		player.gameObject.SetActive(false);
 		gameObject.SetActive(false);
-		isCapture = true;
+		
 	}
 	// Update is called once per frame
 	void Update()
