@@ -4,23 +4,60 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    public TextMeshProUGUI hintText; // Ссылка на TextMeshPro объект для отображения количества подсказок
-    private int hintsCollected = 0; // Фактическое количество собранных подсказок
-    private const int maxHints = 10; // Максимальное количество подсказок
-	private bool isCollecting = false;
+	public TextMeshProUGUI hintText; // Ссылка на TextMeshPro объект для отображения количества подсказок
+	private int hintsCollected = 0; // Фактическое количество собранных подсказок
+	private const int maxHints = 10; // Максимальное количество подсказок
+	[SerializeField] private bool isCollecting = false;
 	public float collectionTime = 1.5f;
+	private PlayerMovement playerMovement;
+	private PlayerAnimationsControl playerAnimationsControl;
+	private Rigidbody2D player_rb;
+	public Animator animator;
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("podskazka") && hintsCollected < maxHints)
-        {
-			isCollecting= true;
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.CompareTag("podskazka") && hintsCollected < maxHints)
+		{
+			isCollecting = true;
 			StartCoroutine(CollectHit(other.gameObject));
-        }
-    }
+
+		}
+	}
+
+	void Start()
+	{
+		playerMovement = GetComponent<PlayerMovement>();
+		playerAnimationsControl = GetComponent<PlayerAnimationsControl>();
+		player_rb = GetComponent<Rigidbody2D>();
+
+
+	}
+
+	void Update()
+	{
+		
+		if (isCollecting)
+		{
+			playerMovement.enabled = false;
+			animator.SetBool("Idle", true);
+			animator.SetBool("MovingUp", false);
+			animator.SetBool("MovingDown", false);
+			animator.SetBool("MovingSide", false);
+			playerAnimationsControl.enabled = false;
+			player_rb.constraints = RigidbodyConstraints2D.FreezePosition;
+		}
+		else if(!isCollecting)
+		{
+			playerMovement.enabled = true;
+			playerAnimationsControl.enabled = true;
+			player_rb.constraints = RigidbodyConstraints2D.None;
+			player_rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+		}
+	}
 
 	IEnumerator CollectHit(GameObject hintObject)
 	{
+
 		yield return new WaitForSeconds(collectionTime);
 		hintsCollected++;
 		UpdateUI();
@@ -29,9 +66,9 @@ public class PlayerController : MonoBehaviour
 		isCollecting = false;
 	}
 
-    void UpdateUI()
-    {
-        hintsCollected = Mathf.Min(hintsCollected, maxHints); // Ограничиваем фактическое количество максимальным числом подсказок
-        hintText.text = "Clue: " + hintsCollected + "/" + maxHints;
-    }
+	void UpdateUI()
+	{
+		hintsCollected = Mathf.Min(hintsCollected, maxHints); // Ограничиваем фактическое количество максимальным числом подсказок
+		hintText.text = "Clue: " + hintsCollected + "/" + maxHints;
+	}
 }
