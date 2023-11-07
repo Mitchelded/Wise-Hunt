@@ -3,25 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using NUnit.Framework;
 
 public class Attack : MonoBehaviour
 {
 
-	public GameObject player;
+    [SerializeField] private GameObject player;
 	public TextMeshProUGUI healthEnemy;
-	public GameObject enemy;
-	public GameObject fightCamera;
-	public GameObject mainCamera;
-
-	// Start is called before the first frame update
-	void Start()
+    //public GameObject enemy;
+    [SerializeField] private GameObject fightCamera;
+    [SerializeField] private GameObject mainCamera;
+    [SerializeField] private GameObject enemy;
+    // Start is called before the first frame update
+    void Start()
 	{
 		Button attack_btn = GetComponent<Button>();
-
-		attack_btn.onClick.AddListener(AttackToEnemy);
+        
+        
+        attack_btn.onClick.AddListener(AttackToEnemy);
 	}
 
-	public void AttackToEnemy()
+    private void Update()
+    {
+        fightCamera = GameObject.FindGameObjectWithTag("FightCamera");
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        player = GameObject.FindGameObjectWithTag("Player");
+        enemy = Fight.enemyInstance;
+    }
+
+    public void AttackToEnemy()
 	{
 		if (StatsEnemy.currentHealth > 0)
 		{

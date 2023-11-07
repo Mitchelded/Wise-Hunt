@@ -5,7 +5,7 @@ using UnityEngine;
 public class TakeDamage : MonoBehaviour
 {
 
-	private GameObject player;
+	[SerializeField] private GameObject player;
 
 	
 

@@ -5,13 +5,13 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
 	public TextMeshProUGUI hintText; // Ссылка на TextMeshPro объект для отображения количества подсказок
-	private int hintsCollected = 0; // Фактическое количество собранных подсказок
-	private const int maxHints = 10; // Максимальное количество подсказок
+	[SerializeField] private int hintsCollected = 0; // Фактическое количество собранных подсказок
+    [SerializeField] private const int maxHints = 10; // Максимальное количество подсказок
 	[SerializeField] private bool isCollecting = false;
 	public float collectionTime = 1.5f;
-	private PlayerMovement playerMovement;
-	private PlayerAnimationsControl playerAnimationsControl;
-	private Rigidbody2D player_rb;
+    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private PlayerAnimationsControl playerAnimationsControl;
+    [SerializeField] private Rigidbody2D player_rb;
 	public Animator animator;
 
 	private void OnTriggerEnter2D(Collider2D other)

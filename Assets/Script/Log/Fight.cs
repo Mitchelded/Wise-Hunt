@@ -1,57 +1,66 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Fight : MonoBehaviour
 {
+    [SerializeField] private GameObject mainCamera;
+    [SerializeField] private GameObject fightCamera;
+    [SerializeField] private GameObject player;
+    public float notCaptureTime = 1.5f;
+    [SerializeField] private bool isCapture = false;
+    public static GameObject enemyInstance;
 
-	public GameObject mainCamera;
-	public GameObject fightCamera;
-	public GameObject player;
-	public float notCaptureTime = 1.5f;
-	private bool isCapture = false;
-	
-	// Start is called before the first frame update
-	void Start()
-	{
 
-	}
+    // Start method - Initialization can be done here
+    void Start()
+    {
+        fightCamera = GameObject.FindGameObjectWithTag("FightCamera");
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
 
-	private void OnTriggerEnter2D(Collider2D other)
-	{
-		if (other.CompareTag("Player"))
-		{
-			if (!isCapture)
-			{
-				Debug.Log("Враг соприкоснулся");
-				mainCamera.gameObject.SetActive(false); // Отключаем подсказку
-				fightCamera.gameObject.SetActive(true);
-				player.gameObject.SetActive(false);
-				gameObject.SetActive(false);
-				isCapture=true;
-			}
-			else
-			{
-				StartCoroutine(CaptureHero(other.gameObject));
-				isCapture = false;
-			}
-			
-		}
-	}
+    // Update method - Update logic goes here
+    void Update()
+    {
+        
+    }
 
-	IEnumerator CaptureHero(GameObject hintObject)
-	{
-		yield return new WaitForSeconds(notCaptureTime);
-		Debug.Log("Враг соприкоснулся");
-		mainCamera.gameObject.SetActive(false); // Отключаем подсказку
-		fightCamera.gameObject.SetActive(true);
-		player.gameObject.SetActive(false);
-		gameObject.SetActive(false);
-		
-	}
-	// Update is called once per frame
-	void Update()
-	{
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (!isCapture)
+            {
+                CapturePlayer();
+            }
+            else
+            {
+                // If player is already captured, initiate the capture coroutine
+                StartCoroutine(ReleasePlayerAfterDelay());
+                isCapture = false;
+            }
+        }
+    }
 
-	}
+    void CapturePlayer()
+    {
+        // Capture the player immediately
+
+        Debug.Log("Enemy encountered");
+        enemyInstance = gameObject;
+        mainCamera.SetActive(false);
+        fightCamera.SetActive(true);
+        player.SetActive(false);
+        gameObject.SetActive(false);
+        isCapture = true;
+    }
+
+    IEnumerator ReleasePlayerAfterDelay()
+    {
+        yield return new WaitForSeconds(notCaptureTime);
+        CapturePlayer(); // After the delay, capture the player again
+    }
+
+
+
 }

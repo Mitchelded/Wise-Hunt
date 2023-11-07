@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class StatsEnemy : MonoBehaviour
 {
-
-	public static float maxHealth = 100f;
+    
+    public static float maxHealth = 100f;
 	public static float currentHealth = 100f;
 	public static float attack = 15.5f;
 	public static float deffence = 0.5f;

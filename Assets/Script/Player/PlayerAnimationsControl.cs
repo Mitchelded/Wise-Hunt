@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerAnimationsControl : MonoBehaviour
 {
-    private Animator animator;
-    private SpriteRenderer spriteRenderer;
+    [SerializeField]private Animator animator;
+    [SerializeField]private SpriteRenderer spriteRenderer;
 
     public float movementThreshold = 0.1f; // Порог движения
 

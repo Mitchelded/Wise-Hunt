@@ -5,8 +5,8 @@ public class MonsterController : MonoBehaviour
 {
     public Transform player;
     public float speed = 15f;
-    private float distance;
-    private BoxCollider2D _boxCollider2D;
+    [SerializeField] private float distance;
+    [SerializeField] private BoxCollider2D _boxCollider2D;
     public float distanceBetween = 0;
 
     private void Start()

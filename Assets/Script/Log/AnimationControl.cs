@@ -3,9 +3,9 @@ using UnityEngine.AI;
 
 public class EnemyAnimationController : MonoBehaviour
 {
-    private Animator animator;
-    private NavMeshAgent navMeshAgent;
-    private bool facingRight = true; // Для отслеживания направления врага
+    [SerializeField] private Animator animator;
+    [SerializeField] private NavMeshAgent navMeshAgent;
+    [SerializeField] private bool facingRight = true; // Для отслеживания направления врага
 
     void Start()
     {

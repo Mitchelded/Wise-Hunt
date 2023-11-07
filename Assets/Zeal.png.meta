@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Zeal_0: 87999038952446442
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
