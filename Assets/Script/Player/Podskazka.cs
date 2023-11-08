@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
-
+using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
 	public TextMeshProUGUI hintText; // ������ �� TextMeshPro ������ ��� ����������� ���������� ���������
@@ -16,7 +16,9 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private PlayerController playerController;
 	[SerializeField] private GameObject enemy;
 	[SerializeField] private StatsHero statsHero;
+	[SerializeField] private Image pultImage;
 	public bool isBattle = false;
+	public bool pultIsPick = false;
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
@@ -24,7 +26,13 @@ public class PlayerController : MonoBehaviour
 		{
 			isCollecting = true;
 			StartCoroutine(CollectHit(other.gameObject));
+		}
 
+		else if (other.CompareTag("NukePult"))
+		{
+			pultIsPick = true;
+			pultImage.enabled = true;
+			other.gameObject.SetActive(false);
 		}
 	}
 
@@ -35,6 +43,7 @@ public class PlayerController : MonoBehaviour
 		player_rb = GetComponent<Rigidbody2D>();
 		playerController = GetComponent<PlayerController>();
 		statsHero = GetComponent<StatsHero>();
+		pultImage = GameObject.FindGameObjectWithTag("NukePultImage").GetComponent<Image>();
 
 
 	}

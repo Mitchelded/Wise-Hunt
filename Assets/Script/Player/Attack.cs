@@ -50,14 +50,29 @@ public class Attack : MonoBehaviour
 
 	public void AttackToEnemy()
 	{
-		
-		statsEnemy.TakeHit(attackToEnemy);
-		isPlayerTurn=false;
-		attack_btn.interactable = false;
-		deffence_btn.interactable=false;
-		run_btn.interactable = false;
-		Invoke("EnemyAtack", 1f);
-
+		if (playerController != null && statsEnemy != null)
+    	{
+			if(!playerController.pultIsPick)
+			{
+				statsEnemy.TakeHit(attackToEnemy);
+			}
+			else if(playerController.pultIsPick)
+			{
+				attackToEnemy = 999999f;
+				statsEnemy.TakeHit(attackToEnemy);
+			}
+			
+			isPlayerTurn=false;
+			attack_btn.interactable = false;
+			deffence_btn.interactable=false;
+			run_btn.interactable = false;
+			Invoke("EnemyAtack", 1f);
+		}
+		else
+		{
+			Debug.LogError("playerController or statsEnemy is not assigned!");
+			// Perform additional error handling or assignment here.
+		}
 	}
 
 	public void DeffenceFromEnemy()

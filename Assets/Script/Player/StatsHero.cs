@@ -19,7 +19,7 @@ public class StatsHero : MonoBehaviour
 	[SerializeField] private Camera mainCamera;
 	[SerializeField] private Camera menuCamera;
 	[SerializeField] private Canvas mainMenu;
-	
+	[SerializeField] private GameObject nukePult;
 	public GameObject enemy;
 	[SerializeField] GameObject[] enemys;
 	[SerializeField] GameObject[] clues;
@@ -45,6 +45,7 @@ public class StatsHero : MonoBehaviour
 		healthHero = GameObject.FindGameObjectWithTag("healthHero").GetComponent<TextMeshProUGUI>();
 		healthHeroMain = GameObject.FindGameObjectWithTag("HealthMain").GetComponent<TextMeshProUGUI>();
 		mainMenu = GameObject.FindGameObjectWithTag("MainMeny").GetComponent<Canvas>();
+		nukePult = GameObject.FindGameObjectWithTag("NukePult");
 	}
 
 	void Update()
@@ -70,7 +71,9 @@ public class StatsHero : MonoBehaviour
 				menuCamera.enabled = true;
 				spawnHero.ReturnHeroToSpawn();
 				mainMenu.enabled = true;
-				
+				nukePult.SetActive(true);
+				playerController.pultIsPick = false;
+
 				foreach (GameObject obj in enemys)
 				{
 					obj.SetActive(true);
@@ -101,6 +104,7 @@ public class StatsHero : MonoBehaviour
 				fightCamera.enabled = false;
 				menuCamera.enabled = true;
 				spawnHero.ReturnHeroToSpawn();
+				gameObject.SetActive(false);
 				// enemy.gameObject.SetActive(false);
 				playerController.isBattle = false;
 			}
