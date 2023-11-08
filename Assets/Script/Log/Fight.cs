@@ -20,6 +20,8 @@ public class Fight : MonoBehaviour
 	[SerializeField] private Rigidbody2D _rb_enemy;
 	[SerializeField] private Rigidbody2D player_rb;
 	[SerializeField] private EnemyChase enemyMovement;
+	[SerializeField] private PlayerController playerController; 
+
 
 	// Start method - Initialization can be done here
 	void Start()
@@ -33,9 +35,11 @@ public class Fight : MonoBehaviour
 		attackScript = GameObject.FindGameObjectWithTag("AttackButton").GetComponent<Attack>();
 		enemyNavMeshAgent = GetComponent<NavMeshAgent>();
 		enemyMovement = GetComponent<EnemyChase>();
+		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 		_rb_enemy = GetComponent<Rigidbody2D>();
 		run_btn.onClick.AddListener(RunFromEnemy);
 	}
+	
 
 	// Update method - Update logic goes here
 	void Update()
@@ -54,6 +58,7 @@ public class Fight : MonoBehaviour
 		playerMovement.enabled=true;
 		enemyNavMeshAgent.enabled = true;
 		enemyMovement.enabled = true;
+		playerController.isBattle = false;
 	}
 
 
@@ -68,6 +73,7 @@ public class Fight : MonoBehaviour
 			}
 			else
 			{
+				
 				// If player is already captured, initiate the capture coroutine
 				StartCoroutine(ReleasePlayerAfterDelay());
 				isCapture = false;
@@ -78,6 +84,7 @@ public class Fight : MonoBehaviour
 	void CapturePlayer()
 	{
 		// Capture the player immediately
+		playerController.isBattle = true;
 		enemyMovement.enabled = false;
 		player_rb.constraints = RigidbodyConstraints2D.FreezePosition;
 		player_rb.constraints = RigidbodyConstraints2D.FreezeRotation;

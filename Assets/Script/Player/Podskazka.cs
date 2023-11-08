@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Rigidbody2D player_rb;
 	public Animator animator;
 	[SerializeField] private PlayerController playerController;
+	[SerializeField] private GameObject enemy;
+	public bool isBattle = false;
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
@@ -38,7 +40,7 @@ public class PlayerController : MonoBehaviour
 	void Update()
 	{
 
-		if (isCollecting)
+		if (isCollecting && !isBattle)
 		{
 
 			playerMovement.enabled = false;
@@ -49,7 +51,7 @@ public class PlayerController : MonoBehaviour
 			playerAnimationsControl.enabled = false;
 			player_rb.constraints = RigidbodyConstraints2D.FreezePosition;
 		}
-		else if (!isCollecting)
+		else if (!isCollecting && !isBattle)
 		{
 
 			playerMovement.enabled = true;

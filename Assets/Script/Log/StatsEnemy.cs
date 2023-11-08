@@ -10,8 +10,8 @@ public class StatsEnemy : MonoBehaviour
 	public float currentHealth = 100f;
 	
 	public float deffence = 0.5f;
-
-	[SerializeField] private PlayerMovement player;
+	[SerializeField] private PlayerController playerController;
+	[SerializeField] private PlayerMovement playerMovement;
 	[SerializeField] private TextMeshProUGUI healthEnemy;
 	
 	
@@ -26,7 +26,8 @@ public class StatsEnemy : MonoBehaviour
 	{
 		fightCamera = GameObject.FindGameObjectWithTag("FightCamera").GetComponent<Camera>();
 		mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-		player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+		playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 		healthEnemy = GameObject.FindGameObjectWithTag("healthEnemy").GetComponent<TextMeshProUGUI>();
 		
 		enemy = gameObject;
@@ -44,8 +45,9 @@ public class StatsEnemy : MonoBehaviour
 				Debug.Log("Враг проиграл");
 				mainCamera.enabled = true;
 				fightCamera.enabled = false;
-				player.enabled = true;
+				playerMovement.enabled = true;
 				enemy.gameObject.SetActive(false);
+				playerController.isBattle = false;
 			}
 			else
 			{
