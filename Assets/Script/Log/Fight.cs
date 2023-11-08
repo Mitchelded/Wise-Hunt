@@ -19,15 +19,17 @@ public class Fight : MonoBehaviour
 	[SerializeField] private Button run_btn;
 	[SerializeField] private Rigidbody2D _rb_enemy;
 	[SerializeField] private Rigidbody2D player_rb;
+	[SerializeField] private GameObject player;
 	[SerializeField] private EnemyChase enemyMovement;
 	[SerializeField] private PlayerController playerController; 
-
+	[SerializeField] private StatsHero statsHero; 
 
 	// Start method - Initialization can be done here
 	void Start()
 	{
 		run_btn = GameObject.FindGameObjectWithTag("RunButton").GetComponent<Button>();
 		player_rb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
+		player = GameObject.FindGameObjectWithTag("Player");
 		fightCamera = GameObject.FindGameObjectWithTag("FightCamera").GetComponent<Camera>();
 		mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 		playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
@@ -36,6 +38,7 @@ public class Fight : MonoBehaviour
 		enemyNavMeshAgent = GetComponent<NavMeshAgent>();
 		enemyMovement = GetComponent<EnemyChase>();
 		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+		statsHero = GameObject.FindGameObjectWithTag("Player").GetComponent<StatsHero>();
 		_rb_enemy = GetComponent<Rigidbody2D>();
 		run_btn.onClick.AddListener(RunFromEnemy);
 	}
@@ -69,10 +72,12 @@ public class Fight : MonoBehaviour
 			if (!isCapture)
 			{
 				
+				
 				CapturePlayer();
 			}
 			else
 			{
+				
 				
 				// If player is already captured, initiate the capture coroutine
 				StartCoroutine(ReleasePlayerAfterDelay());
@@ -92,8 +97,15 @@ public class Fight : MonoBehaviour
 		_rb_enemy.constraints = RigidbodyConstraints2D.FreezePosition;
 		_rb_enemy.constraints = RigidbodyConstraints2D.FreezeRotation;
 		playerMovement.enabled = false;
+
+
 		attackScript.enemy = gameObject;
+		statsHero.enemy = gameObject;
 		attackScript.statsEnemy = GetComponent<StatsEnemy>();
+		attackScript.statsHero = statsHero;
+		attackScript.player = player;
+
+
 		Debug.Log("Enemy encountered");
 		mainCamera.enabled = false;
 		fightCamera.enabled = true;

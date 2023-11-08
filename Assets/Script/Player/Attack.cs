@@ -8,29 +8,69 @@ using NUnit.Framework;
 public class Attack : MonoBehaviour
 {
 	public float attack = 15.5f;
-	
+
 	public GameObject enemy;
+	public GameObject player;
+	public PlayerController playerController;
 	public StatsEnemy statsEnemy;
-	
+	public StatsHero statsHero;
+	[SerializeField]private Button attack_btn;
+	[SerializeField]private bool isPlayerTurn = true;
+
+	[SerializeField]private int count = 0;
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		Button attack_btn = GetComponent<Button>();
+		attack_btn = GetComponent<Button>();
+		// player  = GameObject.FindGameObjectWithTag("Player").GetComponent<GameObject>();
 		
-		while (enemy = null)
+		// statsEnemy = enemy.GetComponent<StatsEnemy>();
+		
+		
+		// statsHero  = GameObject.FindGameObjectWithTag("Player").GetComponent<StatsHero>();
+
+		// statsHero = player.GetComponent<StatsHero>();
+		// attack_btn.onClick.AddListener(AttackToEnemy);
+		while(playerController==null)
 		{
-			statsEnemy = enemy.GetComponent<StatsEnemy>();
+			
 		}
-		attack_btn.onClick.AddListener(AttackToEnemy);
+		
+	}
+
+	private void Update() 
+	{
+		while(playerController!=null)
+		{
+			playerController = player.GetComponent<PlayerController>();
+		}
+		// attack_btn.onClick.AddListener(AttackToEnemy);
+		if(isPlayerTurn && count==0 && playerController.isBattle)
+		{
+			count=1;
+			attack_btn.onClick.AddListener(AttackToEnemy);
+			Debug.Log("Enemy take " + statsEnemy.currentHealth);
+		}
+		else if(!isPlayerTurn && count==1 && playerController.isBattle)
+		{
+			attack_btn.onClick.RemoveListener(AttackToEnemy);
+			statsHero.TakeHit(attack);
+			count=0;
+			Debug.Log("Player take " + statsHero.currentHealth);
+		}
 	}
 
 
 	public void AttackToEnemy()
 	{
+		
 		statsEnemy.TakeHit(attack);
+		isPlayerTurn=false;
 
 	}
 
 
 }
+
+

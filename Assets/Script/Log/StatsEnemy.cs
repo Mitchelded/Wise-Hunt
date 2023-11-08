@@ -17,7 +17,7 @@ public class StatsEnemy : MonoBehaviour
 	
 	[SerializeField] private Camera fightCamera;
 	[SerializeField] private Camera mainCamera;
-	[SerializeField] private GameObject enemy;
+	public GameObject enemy;
 	
 
 
@@ -29,8 +29,8 @@ public class StatsEnemy : MonoBehaviour
 		playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
 		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 		healthEnemy = GameObject.FindGameObjectWithTag("healthEnemy").GetComponent<TextMeshProUGUI>();
-		
 		enemy = gameObject;
+		
 	}
 
 	public void TakeHit(float attack)
@@ -38,11 +38,11 @@ public class StatsEnemy : MonoBehaviour
 		if (currentHealth > 0f)
 		{
 			currentHealth = currentHealth - attack * deffence;
-			Debug.Log(currentHealth);
+			
 			if (currentHealth <= 0f)
 			{
 				healthEnemy.text = "HP: " + "0" + "/" + maxHealth;
-				Debug.Log("Враг проиграл");
+				Debug.Log("пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 				mainCamera.enabled = true;
 				fightCamera.enabled = false;
 				playerMovement.enabled = true;
@@ -60,7 +60,7 @@ public class StatsEnemy : MonoBehaviour
 
 	void UpdateUI()
 	{
-		currentHealth = Mathf.Min(currentHealth, maxHealth); // Ограничиваем фактическое количество максимальным числом подсказок
+		currentHealth = Mathf.Min(currentHealth, maxHealth); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		healthEnemy.text = "HP: " + currentHealth + "/" + maxHealth;
 	}
 
