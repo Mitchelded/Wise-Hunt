@@ -16,13 +16,17 @@ public class Attack : MonoBehaviour
 	public StatsEnemy statsEnemy;
 	public StatsHero statsHero;
 	[SerializeField]private Button attack_btn;
+	[SerializeField]private Button deffence_btn;
+	[SerializeField]private Button run_btn;
 	[SerializeField]private bool isPlayerTurn = true;
-
+	[SerializeField] private TextMeshProUGUI healthEnemy;
 	[SerializeField]private int count = 0;
 
 	// Start is called before the first frame update
 	void Start()
 	{
+		deffence_btn = GameObject.FindGameObjectWithTag("DeffenseButton").GetComponent<Button>();
+		run_btn = GameObject.FindGameObjectWithTag("RunButton").GetComponent<Button>();
 		attack_btn = GetComponent<Button>();
 		// player  = GameObject.FindGameObjectWithTag("Player").GetComponent<GameObject>();
 		
@@ -40,22 +44,7 @@ public class Attack : MonoBehaviour
 	private void Update() 
 	{
 		
-		// playerController = player.GetComponent<PlayerController>();
 		
-		// // attack_btn.onClick.AddListener(AttackToEnemy);
-		// if(isPlayerTurn && count==0 && playerController.isBattle)
-		// {
-		// 	count=1;
-		// 	// attack_btn.onClick.AddListener(AttackToEnemy);
-		// 	Debug.Log("Enemy take " + statsEnemy.currentHealth);
-		// }
-		// else if(!isPlayerTurn && count==1 && playerController.isBattle)
-		// {
-		// 	attack_btn.onClick.RemoveListener(AttackToEnemy);
-		// 	statsHero.TakeHit(attack);
-		// 	count=0;
-		// 	Debug.Log("Player take " + statsHero.currentHealth);
-		// }
 	}
 
 
@@ -65,8 +54,20 @@ public class Attack : MonoBehaviour
 		statsEnemy.TakeHit(attackToEnemy);
 		isPlayerTurn=false;
 		attack_btn.interactable = false;
+		deffence_btn.interactable=false;
+		run_btn.interactable = false;
 		Invoke("EnemyAtack", 1f);
 
+	}
+
+	public void DeffenceFromEnemy()
+	{
+		statsHero.Deffence(attackToHero);
+		isPlayerTurn=false;
+		attack_btn.interactable = false;
+		deffence_btn.interactable=false;
+		run_btn.interactable = false;
+		Invoke("EnemyAtack", 1f);
 	}
 
 	public void EnemyAtack()
@@ -74,6 +75,8 @@ public class Attack : MonoBehaviour
 		statsHero.TakeHit(attackToHero);
 		isPlayerTurn=true;
 		attack_btn.interactable = true;
+		deffence_btn.interactable=true;
+		run_btn.interactable = true;
 	}
 
 

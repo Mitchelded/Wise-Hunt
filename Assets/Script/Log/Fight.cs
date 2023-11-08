@@ -23,7 +23,7 @@ public class Fight : MonoBehaviour
 	[SerializeField] private EnemyChase enemyMovement;
 	[SerializeField] private PlayerController playerController; 
 	[SerializeField] private StatsHero statsHero; 
-
+	[SerializeField] private StatsEnemy statsEnemy; 
 	// Start method - Initialization can be done here
 	void Start()
 	{
@@ -39,6 +39,7 @@ public class Fight : MonoBehaviour
 		enemyMovement = GetComponent<EnemyChase>();
 		playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 		statsHero = GameObject.FindGameObjectWithTag("Player").GetComponent<StatsHero>();
+		statsEnemy = GetComponent<StatsEnemy>();
 		_rb_enemy = GetComponent<Rigidbody2D>();
 		run_btn.onClick.AddListener(RunFromEnemy);
 	}
@@ -72,7 +73,7 @@ public class Fight : MonoBehaviour
 			if (!isCapture)
 			{
 				
-				
+				statsEnemy.UpdateUI();
 				CapturePlayer();
 			}
 			else
@@ -101,7 +102,7 @@ public class Fight : MonoBehaviour
 
 		attackScript.enemy = gameObject;
 		statsHero.enemy = gameObject;
-		attackScript.statsEnemy = GetComponent<StatsEnemy>();
+		attackScript.statsEnemy = statsEnemy;
 		attackScript.statsHero = statsHero;
 		attackScript.player = player;
 
@@ -118,6 +119,7 @@ public class Fight : MonoBehaviour
 		yield return new WaitForSeconds(notCaptureTime);
 		CapturePlayer(); // After the delay, capture the player again
 	}
+
 
 
 

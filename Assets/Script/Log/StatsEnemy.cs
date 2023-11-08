@@ -33,13 +33,22 @@ public class StatsEnemy : MonoBehaviour
 		
 	}
 
+	void Update()
+	{
+		// UpdateUI();
+	}
+
 	public void TakeHit(float attack)
 	{
-		if (currentHealth > 0f)
-		{
-			currentHealth = currentHealth - attack * deffence;
-			
-			if (currentHealth <= 0f)
+
+		
+
+			if(currentHealth - attack * deffence > 0 && playerController.isBattle)
+			{
+				currentHealth = currentHealth - attack * deffence;
+				UpdateUI();
+			}
+			else if (currentHealth - attack * deffence <= 0f)
 			{
 				healthEnemy.text = "HP: " + "0" + "/" + maxHealth;
 				Debug.Log("���� ��������");
@@ -49,16 +58,11 @@ public class StatsEnemy : MonoBehaviour
 				enemy.gameObject.SetActive(false);
 				playerController.isBattle = false;
 			}
-			else
-			{
-				UpdateUI();
-			}
 
 
-		}
 	}
 
-	void UpdateUI()
+	public void UpdateUI()
 	{
 		currentHealth = Mathf.Min(currentHealth, maxHealth); // ������������ ����������� ���������� ������������ ������ ���������
 		healthEnemy.text = "HP: " + currentHealth + "/" + maxHealth;

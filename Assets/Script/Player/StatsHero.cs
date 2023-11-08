@@ -11,41 +11,82 @@ public class StatsHero : MonoBehaviour
 	
 	[SerializeField] private TextMeshProUGUI healthHero;
 	[SerializeField] private PlayerController playerController;
-	// [SerializeField] private PlayerMovement playerMovement;
-	// [SerializeField] private Camera fightCamera;
-	// [SerializeField] private Camera mainCamera;
+	[SerializeField] private TextMeshProUGUI healthHeroMain;
+	[SerializeField] private Transform playerTransform;
+	[SerializeField] private SpawnHero spawnHero;
+	[SerializeField] private PlayerMovement playerMovement;
+	[SerializeField] private Camera fightCamera;
+	[SerializeField] private Camera mainCamera;
+	[SerializeField] private Camera menuCamera;
+	[SerializeField] private Canvas mainMenu;
 	
 	 public GameObject enemy;
 
 	public float maxHealth = 100f;
     public float currentHealth = 100f;
+	public float multiplayDeffense = 2f;
     //public static float attack = 15.5f;
     public float deffence = 0.5f;
 
 
 	void Start()
 	{
-		// fightCamera = GameObject.FindGameObjectWithTag("FightCamera").GetComponent<Camera>();
-		// mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-		// playerMovement = GetComponent<PlayerMovement>();
+		fightCamera = GameObject.FindGameObjectWithTag("FightCamera").GetComponent<Camera>();
+		mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+		menuCamera = GameObject.FindGameObjectWithTag("MenuCamera").GetComponent<Camera>();
+		playerMovement = GetComponent<PlayerMovement>();
 		playerController = GetComponent<PlayerController>();
+		playerTransform = GetComponent<Transform>();
+		spawnHero = GameObject.FindGameObjectWithTag("SpawnHero").GetComponent<SpawnHero>();
 		healthHero = GameObject.FindGameObjectWithTag("healthHero").GetComponent<TextMeshProUGUI>();
-		
+		healthHeroMain = GameObject.FindGameObjectWithTag("HealthMain").GetComponent<TextMeshProUGUI>();
+		mainMenu = GameObject.FindGameObjectWithTag("MainMeny").GetComponent<Canvas>();
+	}
+
+	void Update()
+	{
+		// UpdateUI();
 	}
 
 	public void TakeHit(float attack)
 	{
-		if (currentHealth > 0f)
-		{
-			currentHealth = currentHealth - attack * deffence;
-			
-			if (currentHealth <= 0f)
+		
+			if(currentHealth - attack * deffence > 0 && playerController.isBattle)
+			{
+				currentHealth = currentHealth - attack * deffence;
+				UpdateUI();
+			}
+			else if (currentHealth - attack * deffence <= 0f)
 			{
 				healthHero.text = "HP: " + "0" + "/" + maxHealth;
 				Debug.Log("���� ��������");
-				// mainCamera.enabled = true;
-				// fightCamera.enabled = false;
-				// playerMovement.enabled = true;
+				mainCamera.enabled = false;
+				fightCamera.enabled = false;
+				menuCamera.enabled = true;
+				spawnHero.ReturnHeroToSpawn();
+				mainMenu.enabled = true;
+				playerController.isBattle = false;
+			}
+			
+	}
+
+	public void Deffence(float attack)
+	{
+		
+			UpdateUI();
+			if(currentHealth > 0f)
+			{
+				currentHealth = currentHealth - attack * deffence*multiplayDeffense;
+				UpdateUI();
+			}
+			else if (currentHealth <= 0f)
+			{
+				healthHero.text = "HP: " + "0" + "/" + maxHealth;
+				Debug.Log("���� ��������");
+				mainCamera.enabled = false;
+				fightCamera.enabled = false;
+				menuCamera.enabled = true;
+				spawnHero.ReturnHeroToSpawn();
 				// enemy.gameObject.SetActive(false);
 				playerController.isBattle = false;
 			}
@@ -53,14 +94,12 @@ public class StatsHero : MonoBehaviour
 			{
 				UpdateUI();
 			}
-
-
-		}
 	}
 
 	void UpdateUI()
 	{
 		currentHealth = Mathf.Min(currentHealth, maxHealth); // ������������ ����������� ���������� ������������ ������ ���������
 		healthHero.text = "HP: " + currentHealth + "/" + maxHealth;
+		healthHeroMain.text = "HP: " + currentHealth + "/" + maxHealth;
 	}
 }
