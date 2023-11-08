@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 5963722106964286218}
   m_Layer: 6
   m_Name: Log
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -253,9 +253,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
   fightCamera: {fileID: 0}
-  player: {fileID: 0}
+  playerMovement: {fileID: 0}
   notCaptureTime: 1
   isCapture: 0
+  button: {fileID: 0}
+  attackScript: {fileID: 0}
+  enemyNavMeshAgent: {fileID: 0}
+  run_btn: {fileID: 0}
+  _rb_enemy: {fileID: 0}
+  player_rb: {fileID: 0}
+  enemyMovement: {fileID: 0}
 --- !u!61 &7847101434925540456
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -322,4 +329,3 @@ MonoBehaviour:
   fightCamera: {fileID: 0}
   mainCamera: {fileID: 0}
   enemy: {fileID: 0}
-  enemyControl: {fileID: 0}

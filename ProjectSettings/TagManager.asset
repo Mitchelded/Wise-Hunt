@@ -9,6 +9,8 @@ TagManager:
   - healthEnemy
   - healthHero
   - Enemy
+  - AttackButton
+  - RunButton
   layers:
   - Default
   - TransparentFX
