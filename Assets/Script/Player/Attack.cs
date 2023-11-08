@@ -7,58 +7,37 @@ using NUnit.Framework;
 
 public class Attack : MonoBehaviour
 {
-
-    [SerializeField] private GameObject player;
-	public TextMeshProUGUI healthEnemy;
-    //public GameObject enemy;
-    [SerializeField] private GameObject fightCamera;
-    [SerializeField] private GameObject mainCamera;
-    [SerializeField] private GameObject enemy;
-    // Start is called before the first frame update
-    void Start()
+	public float attack = 15.5f;
+	//   [SerializeField] private PlayerMovement player;
+	//public TextMeshProUGUI healthEnemy;
+	//   //public GameObject enemy;
+	//   [SerializeField] private Camera fightCamera;
+	//   [SerializeField] private Camera mainCamera;
+	//[SerializeField] private EnemyChase enemy;
+	public GameObject enemy;
+	public StatsEnemy statsEnemy;
+	// Start is called before the first frame update
+	void Start()
 	{
 		Button attack_btn = GetComponent<Button>();
-        
-        
-        attack_btn.onClick.AddListener(AttackToEnemy);
-	}
-
-    private void Update()
-    {
-        fightCamera = GameObject.FindGameObjectWithTag("FightCamera");
-        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        player = GameObject.FindGameObjectWithTag("Player");
-        enemy = Fight.enemyInstance;
-    }
-
-    public void AttackToEnemy()
-	{
-		if (StatsEnemy.currentHealth > 0)
+		//fightCamera = GameObject.FindGameObjectWithTag("FightCamera").GetComponent<Camera>();
+		//mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+		//player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+		//enemy = Fight.enemyInstance;
+		
+		while (enemy = null)
 		{
-			StatsEnemy.currentHealth = StatsEnemy.currentHealth - StatsHero.attack * StatsEnemy.deffence;
-			Debug.Log(StatsEnemy.currentHealth);
-			if (StatsEnemy.currentHealth <= 0)
-			{
-				healthEnemy.text = "HP: " + "0" + "/" + StatsEnemy.maxHealth;
-				Debug.Log("Враг проиграл");
-				mainCamera.gameObject.SetActive(true);
-				fightCamera.gameObject.SetActive(false);
-				player.gameObject.SetActive(true);
-				enemy.gameObject.SetActive(false);
-			}
-			else
-			{
-				UpdateUI();
-			}
-
-
+			statsEnemy = enemy.GetComponent<StatsEnemy>();
 		}
-
+		attack_btn.onClick.AddListener(AttackToEnemy);
 	}
 
-	void UpdateUI()
+
+	public void AttackToEnemy()
 	{
-		StatsEnemy.currentHealth = Mathf.Min(StatsEnemy.currentHealth, StatsEnemy.maxHealth); // Ограничиваем фактическое количество максимальным числом подсказок
-		healthEnemy.text = "HP: " + StatsEnemy.currentHealth + "/" + StatsEnemy.maxHealth;
+		statsEnemy.TakeHit(attack);
+
 	}
+
+
 }

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - podskazka
   - FightCamera
+  - healthEnemy
+  - healthHero
+  - Enemy
   layers:
   - Default
   - TransparentFX
