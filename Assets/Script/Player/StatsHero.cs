@@ -10,11 +10,11 @@ public class StatsHero : MonoBehaviour
 
 	[SerializeField] private PlayerMovement player;
 	[SerializeField] private TextMeshProUGUI healthHero;
-	//public GameObject enemy;
+	
 	[SerializeField] private Camera fightCamera;
 	[SerializeField] private Camera mainCamera;
-	//[SerializeField] private EnemyChase enemy;
-	[SerializeField] private GameObject enemy;
+	
+	 public GameObject enemy;
 
 	public float maxHealth = 100f;
     public float currentHealth = 100f;
@@ -28,7 +28,7 @@ public class StatsHero : MonoBehaviour
 		mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 		player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
 		healthHero = GameObject.FindGameObjectWithTag("Player").GetComponent<TextMeshProUGUI>();
-		enemy = Fight.enemyInstance;
+		
 	}
 
 	public void TakeHit(float attack)

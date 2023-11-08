@@ -8,18 +8,17 @@ public class StatsEnemy : MonoBehaviour
 {
 	public float maxHealth = 100f;
 	public float currentHealth = 100f;
-	//public static float attack = 15.5f;
+	
 	public float deffence = 0.5f;
 
 	[SerializeField] private PlayerMovement player;
 	[SerializeField] private TextMeshProUGUI healthEnemy;
 	
-	//public GameObject enemy;
+	
 	[SerializeField] private Camera fightCamera;
 	[SerializeField] private Camera mainCamera;
 	[SerializeField] private GameObject enemy;
-	//[SerializeField] private EnemyChase enemy;
-	//[SerializeField] private EnemyChase enemyControl;
+	
 
 
 

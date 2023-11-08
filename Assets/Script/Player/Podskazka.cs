@@ -6,13 +6,14 @@ public class PlayerController : MonoBehaviour
 {
 	public TextMeshProUGUI hintText; // Ссылка на TextMeshPro объект для отображения количества подсказок
 	[SerializeField] private int hintsCollected = 0; // Фактическое количество собранных подсказок
-    [SerializeField] private const int maxHints = 10; // Максимальное количество подсказок
+	[SerializeField] private const int maxHints = 10; // Максимальное количество подсказок
 	[SerializeField] private bool isCollecting = false;
 	public float collectionTime = 1.5f;
-    [SerializeField] private PlayerMovement playerMovement;
-    [SerializeField] private PlayerAnimationsControl playerAnimationsControl;
-    [SerializeField] private Rigidbody2D player_rb;
+	[SerializeField] private PlayerMovement playerMovement;
+	[SerializeField] private PlayerAnimationsControl playerAnimationsControl;
+	[SerializeField] private Rigidbody2D player_rb;
 	public Animator animator;
+	[SerializeField] private PlayerController playerController;
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
@@ -29,15 +30,17 @@ public class PlayerController : MonoBehaviour
 		playerMovement = GetComponent<PlayerMovement>();
 		playerAnimationsControl = GetComponent<PlayerAnimationsControl>();
 		player_rb = GetComponent<Rigidbody2D>();
+		playerController = GetComponent<PlayerController>();
 
 
 	}
 
 	void Update()
 	{
-		
+
 		if (isCollecting)
 		{
+
 			playerMovement.enabled = false;
 			animator.SetBool("Idle", true);
 			animator.SetBool("MovingUp", false);
@@ -46,12 +49,15 @@ public class PlayerController : MonoBehaviour
 			playerAnimationsControl.enabled = false;
 			player_rb.constraints = RigidbodyConstraints2D.FreezePosition;
 		}
-		else if(!isCollecting)
+		else if (!isCollecting)
 		{
+
 			playerMovement.enabled = true;
 			playerAnimationsControl.enabled = true;
 			player_rb.constraints = RigidbodyConstraints2D.None;
 			player_rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+
 		}
 	}
 
