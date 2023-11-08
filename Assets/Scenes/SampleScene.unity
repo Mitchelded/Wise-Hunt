@@ -22441,6 +22441,7 @@ MonoBehaviour:
   playerAnimationsControl: {fileID: 0}
   player_rb: {fileID: 0}
   animator: {fileID: 1819226842}
+  playerController: {fileID: 0}
 --- !u!114 &1819226846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22453,6 +22454,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78719eae8f3baf74abb1b624ef75ca0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  healthHero: {fileID: 0}
+  fightCamera: {fileID: 0}
+  mainCamera: {fileID: 0}
+  enemy: {fileID: 0}
+  maxHealth: 100
+  currentHealth: 100
+  deffence: 0.5
 --- !u!1001 &1842100083
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22644,11 +22653,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9abc3fbd79fdc64588c3365da8f7799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  healthEnemy: {fileID: 1573926831}
-  fightCamera: {fileID: 0}
-  mainCamera: {fileID: 0}
+  attack: 15.5
   enemy: {fileID: 0}
+  statsEnemy: {fileID: 0}
 --- !u!1 &1947389796
 GameObject:
   m_ObjectHideFlags: 0
@@ -23816,11 +23823,11 @@ PrefabInstance:
     - target: {fileID: 4574827509805126508, guid: a4734ab802b3c4c4f86fee2808c63be2, type: 3}
       propertyPath: mainCamera
       value: 
-      objectReference: {fileID: 519420028}
+      objectReference: {fileID: 519420031}
     - target: {fileID: 4574827509805126508, guid: a4734ab802b3c4c4f86fee2808c63be2, type: 3}
       propertyPath: fightCamera
       value: 
-      objectReference: {fileID: 1349042865}
+      objectReference: {fileID: 1349042866}
     - target: {fileID: 4691811941654919208, guid: a4734ab802b3c4c4f86fee2808c63be2, type: 3}
       propertyPath: m_Name
       value: Log
