@@ -4,9 +4,9 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-	public TextMeshProUGUI hintText; // Ссылка на TextMeshPro объект для отображения количества подсказок
-	[SerializeField] private int hintsCollected = 0; // Фактическое количество собранных подсказок
-	[SerializeField] private const int maxHints = 10; // Максимальное количество подсказок
+	public TextMeshProUGUI hintText; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ TextMeshPro пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	[SerializeField] public int hintsCollected = 0; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+	[SerializeField] private const int maxHints = 10; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	[SerializeField] private bool isCollecting = false;
 	public float collectionTime = 1.5f;
 	[SerializeField] private PlayerMovement playerMovement;
@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
 	public Animator animator;
 	[SerializeField] private PlayerController playerController;
 	[SerializeField] private GameObject enemy;
+	[SerializeField] private StatsHero statsHero;
 	public bool isBattle = false;
 
 	private void OnTriggerEnter2D(Collider2D other)
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
 		playerAnimationsControl = GetComponent<PlayerAnimationsControl>();
 		player_rb = GetComponent<Rigidbody2D>();
 		playerController = GetComponent<PlayerController>();
+		statsHero = GetComponent<StatsHero>();
 
 
 	}
@@ -58,8 +60,16 @@ public class PlayerController : MonoBehaviour
 			playerAnimationsControl.enabled = true;
 			player_rb.constraints = RigidbodyConstraints2D.None;
 			player_rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-
-
+		}
+		if(statsHero.isDefeat)
+		{
+			hintsCollected = 0;
+			statsHero.isDefeat = false;
+			UpdateUI();
+		}
+		else
+		{
+			return;
 		}
 	}
 
@@ -69,14 +79,14 @@ public class PlayerController : MonoBehaviour
 		yield return new WaitForSeconds(collectionTime);
 		hintsCollected++;
 		UpdateUI();
-		hintObject.gameObject.SetActive(false); // Отключаем подсказку
-		Debug.Log("Подсказка была подобрана");
+		hintObject.gameObject.SetActive(false); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 		isCollecting = false;
 	}
 
 	void UpdateUI()
 	{
-		hintsCollected = Mathf.Min(hintsCollected, maxHints); // Ограничиваем фактическое количество максимальным числом подсказок
+		hintsCollected = Mathf.Min(hintsCollected, maxHints); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		hintText.text = "Clue: " + hintsCollected + "/" + maxHints;
 	}
 }

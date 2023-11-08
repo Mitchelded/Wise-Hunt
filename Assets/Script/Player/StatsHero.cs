@@ -20,13 +20,15 @@ public class StatsHero : MonoBehaviour
 	[SerializeField] private Camera menuCamera;
 	[SerializeField] private Canvas mainMenu;
 	
-	 public GameObject enemy;
-
+	public GameObject enemy;
+	[SerializeField] GameObject[] enemys;
+	[SerializeField] GameObject[] clues;
 	public float maxHealth = 100f;
     public float currentHealth = 100f;
 	public float multiplayDeffense = 2f;
     //public static float attack = 15.5f;
     public float deffence = 0.5f;
+	public bool isDefeat = false;
 
 
 	void Start()
@@ -37,6 +39,8 @@ public class StatsHero : MonoBehaviour
 		playerMovement = GetComponent<PlayerMovement>();
 		playerController = GetComponent<PlayerController>();
 		playerTransform = GetComponent<Transform>();
+		enemys = GameObject.FindGameObjectsWithTag("Enemy");
+		clues = GameObject.FindGameObjectsWithTag("podskazka");
 		spawnHero = GameObject.FindGameObjectWithTag("SpawnHero").GetComponent<SpawnHero>();
 		healthHero = GameObject.FindGameObjectWithTag("healthHero").GetComponent<TextMeshProUGUI>();
 		healthHeroMain = GameObject.FindGameObjectWithTag("HealthMain").GetComponent<TextMeshProUGUI>();
@@ -58,6 +62,7 @@ public class StatsHero : MonoBehaviour
 			}
 			else if (currentHealth - attack * deffence <= 0f)
 			{
+				isDefeat = true;
 				healthHero.text = "HP: " + "0" + "/" + maxHealth;
 				Debug.Log("���� ��������");
 				mainCamera.enabled = false;
@@ -65,6 +70,15 @@ public class StatsHero : MonoBehaviour
 				menuCamera.enabled = true;
 				spawnHero.ReturnHeroToSpawn();
 				mainMenu.enabled = true;
+				
+				foreach (GameObject obj in enemys)
+				{
+					obj.SetActive(true);
+				}
+				foreach (GameObject obj in clues)
+				{
+					obj.SetActive(true);
+				}
 				playerController.isBattle = false;
 			}
 			
