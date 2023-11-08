@@ -11,6 +11,14 @@ TagManager:
   - Enemy
   - AttackButton
   - RunButton
+  - DeffenseButton
+  - HealthMain
+  - SpawnHero
+  - MenuCamera
+  - MainMeny
+  - Clue
+  - NukePult
+  - NukePultImage
   layers:
   - Default
   - TransparentFX
