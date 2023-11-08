@@ -7,7 +7,8 @@ using NUnit.Framework;
 
 public class Attack : MonoBehaviour
 {
-	public float attack = 15.5f;
+	public float attackToEnemy = 15.5f;
+	public float attackToHero = 15.5f;
 
 	public GameObject enemy;
 	public GameObject player;
@@ -31,43 +32,48 @@ public class Attack : MonoBehaviour
 		// statsHero  = GameObject.FindGameObjectWithTag("Player").GetComponent<StatsHero>();
 
 		// statsHero = player.GetComponent<StatsHero>();
-		// attack_btn.onClick.AddListener(AttackToEnemy);
-		while(playerController==null)
-		{
-			
-		}
+		attack_btn.onClick.AddListener(AttackToEnemy);
+		
 		
 	}
 
 	private void Update() 
 	{
-		while(playerController!=null)
-		{
-			playerController = player.GetComponent<PlayerController>();
-		}
-		// attack_btn.onClick.AddListener(AttackToEnemy);
-		if(isPlayerTurn && count==0 && playerController.isBattle)
-		{
-			count=1;
-			attack_btn.onClick.AddListener(AttackToEnemy);
-			Debug.Log("Enemy take " + statsEnemy.currentHealth);
-		}
-		else if(!isPlayerTurn && count==1 && playerController.isBattle)
-		{
-			attack_btn.onClick.RemoveListener(AttackToEnemy);
-			statsHero.TakeHit(attack);
-			count=0;
-			Debug.Log("Player take " + statsHero.currentHealth);
-		}
+		
+		// playerController = player.GetComponent<PlayerController>();
+		
+		// // attack_btn.onClick.AddListener(AttackToEnemy);
+		// if(isPlayerTurn && count==0 && playerController.isBattle)
+		// {
+		// 	count=1;
+		// 	// attack_btn.onClick.AddListener(AttackToEnemy);
+		// 	Debug.Log("Enemy take " + statsEnemy.currentHealth);
+		// }
+		// else if(!isPlayerTurn && count==1 && playerController.isBattle)
+		// {
+		// 	attack_btn.onClick.RemoveListener(AttackToEnemy);
+		// 	statsHero.TakeHit(attack);
+		// 	count=0;
+		// 	Debug.Log("Player take " + statsHero.currentHealth);
+		// }
 	}
 
 
 	public void AttackToEnemy()
 	{
 		
-		statsEnemy.TakeHit(attack);
+		statsEnemy.TakeHit(attackToEnemy);
 		isPlayerTurn=false;
+		attack_btn.interactable = false;
+		Invoke("EnemyAtack", 1f);
 
+	}
+
+	public void EnemyAtack()
+	{
+		statsHero.TakeHit(attackToHero);
+		isPlayerTurn=true;
+		attack_btn.interactable = true;
 	}
 
 
